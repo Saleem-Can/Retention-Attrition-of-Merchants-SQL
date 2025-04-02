@@ -1,0 +1,33 @@
+WITH 
+-- Merchants active in February 2016
+Feb2016_Merchants AS (
+    SELECT DISTINCT merchant_id
+    FROM ORDERS
+    WHERE YEAR(order_date) = 2016 AND MONTH(order_date) = 2
+),
+
+-- Merchants active in February 2017
+Feb2017_Merchants AS (
+    SELECT DISTINCT merchant_id
+    FROM ORDERS
+    WHERE YEAR(order_date) = 2017 AND MONTH(order_date) = 2
+),
+
+-- Counts for calculation
+Counts AS (
+    SELECT 
+        COUNT(DISTINCT f16.merchant_id) AS total_feb2016,
+        COUNT(DISTINCT CASE WHEN f17.merchant_id IS NOT NULL THEN f16.merchant_id END) AS retained_count,
+        COUNT(DISTINCT CASE WHEN f17.merchant_id IS NULL THEN f16.merchant_id END) AS attrited_count
+    FROM Feb2016_Merchants f16
+    LEFT JOIN Feb2017_Merchants f17 ON f16.merchant_id = f17.merchant_id
+)
+
+-- Final calculation with zero decimal places
+SELECT 
+    total_feb2016 AS merchants_feb2016,
+    retained_count AS merchants_retained,
+    attrited_count AS merchants_attrited,
+    CAST(ROUND((retained_count * 100.0 / NULLIF(total_feb2016, 0)), 0) AS INT) AS retention_pct,
+    CAST(ROUND((attrited_count * 100.0 / NULLIF(total_feb2016, 0)), 0) AS INT) AS attrition_pct
+FROM Counts;

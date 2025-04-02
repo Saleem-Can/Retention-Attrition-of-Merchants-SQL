@@ -1,0 +1,18 @@
+-- Create MERCHANTS dimension table with DATETIME2
+CREATE TABLE MERCHANTS (
+    merchant_id INTEGER PRIMARY KEY,
+    marketplace VARCHAR(50),
+    launch_date DATETIME2,
+    product_desc VARCHAR(100),
+    country_of_origin VARCHAR(50)
+);
+
+-- Create ORDERS fact table with DATETIME2
+CREATE TABLE ORDERS (
+    merchant_id INTEGER FOREIGN KEY REFERENCES MERCHANTS(merchant_id),
+    marketplace VARCHAR(50),
+    order_id VARCHAR(50) PRIMARY KEY,
+    sales DECIMAL(10,2),
+    units INTEGER,
+    order_date DATETIME2
+);

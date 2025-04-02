@@ -1,0 +1,32 @@
+-- Insert merchants
+INSERT INTO MERCHANTS (merchant_id, marketplace, launch_date, product_desc, country_of_origin) VALUES
+(1, 'Amazon', '2015-01-15', 'Electronics', 'USA'),
+(2, 'eBay', '2015-03-22', 'Clothing', 'UK'),
+(3, 'Amazon', '2015-05-10', 'Home Goods', 'Germany'),
+(4, 'Walmart', '2015-07-18', 'Toys', 'USA'),
+(5, 'eBay', '2015-09-05', 'Books', 'Canada'),
+(6, 'Amazon', '2015-11-30', 'Sports Equipment', 'China'),
+(7, 'Walmart', '2016-01-15', 'Furniture', 'USA'),
+(8, 'eBay', '2016-02-20', 'Jewelry', 'India'),
+(9, 'Amazon', '2016-03-10', 'Pet Supplies', 'USA'),
+(10, 'Walmart', '2016-04-05', 'Garden Tools', 'UK');
+
+-- Insert orders with specific dates for analysis
+INSERT INTO ORDERS (merchant_id, marketplace, order_id, sales, units, order_date) VALUES
+-- Merchants active in both Feb 2016 and Feb 2017 (retained)
+(1, 'Amazon', 'ORD001', 150.00, 2, '2016-02-10'),
+(1, 'Amazon', 'ORD002', 200.00, 3, '2017-02-15'),
+(2, 'eBay', 'ORD003', 75.50, 1, '2016-02-12'),
+(2, 'eBay', 'ORD004', 120.00, 2, '2017-02-18'),
+(3, 'Amazon', 'ORD005', 300.00, 5, '2016-02-15'),
+(3, 'Amazon', 'ORD006', 250.00, 4, '2017-02-20'),
+
+-- Merchants active in Feb 2016 but not Feb 2017 (attrited)
+(4, 'Walmart', 'ORD007', 180.00, 3, '2016-02-08'),
+(5, 'eBay', 'ORD008', 90.00, 2, '2016-02-14'),
+(6, 'Amazon', 'ORD009', 220.00, 4, '2016-02-16'),
+
+-- Merchants active in Feb 2017 but not Feb 2016 (new)
+(7, 'Walmart', 'ORD010', 150.00, 2, '2017-02-05'),
+(8, 'eBay', 'ORD011', 85.00, 1, '2017-02-12'),
+(9, 'Amazon', 'ORD012', 310.00, 5, '2017-02-15');
